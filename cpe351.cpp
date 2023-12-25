@@ -27,4 +27,29 @@ process processArr[noOfProcesses];
         cout<<"Arrival Time: " << processArr[i].arrivalTm << endl;
         cout<<"Priority: " << processArr[i].priority << endl;
     }
- }
+ } 
+//Menu 
+ int simulatorMainMenu(string method, string mode) {
+    int choice1;
+    cout <<"           "<< "CPU Scheduler Simulator"<<"             "<<endl;
+    cout << "1) Scheduling Method (" <<method<< ")" <<endl;
+    cout << "2) Preemptive Mode (" <<mode<< ")" << endl;
+    cout << "3) Show result" <<endl;
+    cout << "4) End program" <<endl;
+    cout << "Option > ";
+    cin >> choice1;
+    return choice1;
+}
+
+int schedulingMethods() {
+    int choice2;
+    cout <<"           "<< "CPU Scheduling Methods"<<"             "<<endl;
+    cout << "1) None: None of scheduling method chosen " <<endl;
+    cout << "2) First Come, First Serve Scheduling " <<endl;
+    cout << "3) Shortest-Job-First Scheduling" <<endl;
+    cout << "4) Priority Scheduling" <<endl;
+    cout << "5) Round-Robin Scheduling" <<endl;
+    cout << "Choose One Of The Following Scheduling Methods: "<<endl;
+    cin >> choice2;
+    return choice2;
+}
