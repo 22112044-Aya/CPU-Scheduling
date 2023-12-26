@@ -53,3 +53,21 @@ int schedulingMethods() {
     cin >> choice2;
     return choice2;
 }
+void diplayOutput(method, mode) {
+    cout << "Scheduling Method: " << method << " - " << mode <<endl;
+    cout << "Process Waiting Times:" <<endl;
+
+    // the following loop will display the waiting time for each process
+    for (int i = 0; i < countP; i++) 
+    {
+    cout << "P" << i + 1 << ": " << waitingTm << " ms" <<endl;
+    }
+    // To calculate the average waiting time, we first have to find the total waiting time
+    double totalWaitingTm = 0;
+    for (int i = 0; i < countP; i++) 
+    {
+        totalWaitingTM += waitingTm;
+    }
+    double avgWaitingTm = totalWaitingTm / countP;
+    cout << "Average Waiting Time: " << avgWaitingTm << " ms" <<endl;
+ }
