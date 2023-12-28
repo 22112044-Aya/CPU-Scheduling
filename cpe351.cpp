@@ -9,25 +9,13 @@ using namespace std;
     double arrivalTm;
     double priority;
  };
-
+// linked list node to store process information
+struct node {
+    process data;
+    struct node* next;
+};
 // this variable will be used to count the number of processes
 int countP = 0;
-// here i defined the number of procesess a program can execute at a time
-const int noOfProcesses = 50;
-// here i created an array that will store information about the processes 
-process processArr[noOfProcesses];
-
-// I wrote a funtion that will display the details about processes being executed 
- void displayProcesses()
- {
-    for(int i=0; i<countP; i++)
-    {
-        cout<<"Process " << i+1 <<endl;
-        cout<<"Burst Time: " << processArr[i].burstTm << endl;
-        cout<<"Arrival Time: " << processArr[i].arrivalTm << endl;
-        cout<<"Priority: " << processArr[i].priority << endl;
-    }
- } 
 //Menu 
  int simulatorMainMenu(string method, string mode) {
     int choice1;
@@ -71,3 +59,23 @@ void diplayOutput(method, mode) {
     double avgWaitingTm = totalWaitingTm / countP;
     cout << "Average Waiting Time: " << avgWaitingTm << " ms" <<endl;
  }
+//create a new node that will represent the creation of a new process in the linked list
+struct node *createNode(double burstTm, double arrivalTm, double priority) {
+    struct node *temp = (struct node *) malloc(sizeof(node));
+    if(temp != NULL)
+    {
+    temp->burstTm = burstTm;
+    temp->arrivalTm = arrivalTm;
+    temp->priority = priority;
+    temp->next = NULL;
+    }
+    return temp;
+}
+
+//function to insert a process into the linked list
+void insertAfter(struct node *afterNode,double burstTm, double arrivalTm, double priority )
+{
+     struct node * temp = createNode(burstTm,arrivalTm,priority);
+     temp->next = afterNode->next;
+     afterNode->next = temp;
+}
