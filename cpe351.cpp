@@ -14,6 +14,15 @@ struct node {
     process data;
     struct node* next;
 };
+
+
+int simulatorMainMenu(string ,string);
+int schedulingMethods();
+void diplayOutput(string ,string);
+struct node *createNode(double, double double);
+void insertAfter(struct node *,double, double double);
+
+
 // this variable will be used to count the number of processes
 int countP = 0;
 //Menu 
