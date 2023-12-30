@@ -21,7 +21,7 @@ int schedulingMethods();
 void diplayOutput(string ,string);
 struct node *createNode(double, double double);
 void insertAfter(struct node *,double, double double);
-
+struct node *FCFS(struct node *);
 
 // this variable will be used to count the number of processes
 int countP = 0;
@@ -88,4 +88,50 @@ void insertAfter(struct node *afterNode,double burstTm, double arrivalTm, double
      temp->next = afterNode->next;
      afterNode->next = temp;
      countP++;
+}
+struct node *FCFS(struct node *currentNode) 
+{
+    //First we will sort the Arrival time, the process that has the least arrival time is executed first
+    struct node *nextNode = NULL;
+    double tempburstTm;
+    double temparrivalTm;
+    double temppriority;
+        if (currentNode != NULL) 
+        {
+            nextNode = currentNode->next;
+            if (nextNode != NULL) 
+            {
+                //If the currentNode arrival time is greater than nextNode arrival time, 
+                //we will swap the processes, meaning we have to swap the burst time, arrival time and priority
+                if (currentNode->arrivalTm > nextNode->arrivalTm) 
+                {
+                    //swap burst time
+                    tempburstTm = currentNode->burstTm;
+                    currentNode->burstTm = nextNode->burstTm;
+                    nextNode->burstTm = tempburstTm;
+                    //swap arrival time
+                    temparrivalTm = currentNode->arrivalTm;
+                    currentNode->arrivalTm = nextNode->arrivalTm;
+                    nextNode->arrivalTm = temparrivalTm;
+                    //swap priority
+                    temppriority = currentNode->priority;
+                    currentNode->priority = nextNode->priority;
+                    nextNode->priority = temppriority;
+
+                }
+                //Move to the next node in the list
+                nextNode = nextNode->next;
+            }
+            //Move to the next node in the list
+            currentNode = currentNode->next;
+        }
+        else if(currentNode == NULL)
+        {
+            cout<<"The list is empty"<<endl;
+        }
+
+        //calculate the waiting time
+        double waitingTM = 0;
+        waitingTm += currentNode->burstTm;
+
 }
