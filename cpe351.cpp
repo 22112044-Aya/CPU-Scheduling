@@ -87,4 +87,5 @@ void insertAfter(struct node *afterNode,double burstTm, double arrivalTm, double
      struct node * temp = createNode(burstTm,arrivalTm,priority);
      temp->next = afterNode->next;
      afterNode->next = temp;
+     countP++;
 }
