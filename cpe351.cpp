@@ -93,9 +93,7 @@ struct node *FCFS(struct node *currentNode)
 {
     //First we will sort the Arrival time, the process that has the least arrival time is executed first
     struct node *nextNode = NULL;
-    double tempburstTm;
-    double temparrivalTm;
-    double temppriority;
+    struct node *tempProcess= NULL;
         if (currentNode != NULL) 
         {
             nextNode = currentNode->next;
@@ -105,18 +103,10 @@ struct node *FCFS(struct node *currentNode)
                 //we will swap the processes, meaning we have to swap the burst time, arrival time and priority
                 if (currentNode->arrivalTm > nextNode->arrivalTm) 
                 {
-                    //swap burst time
-                    tempburstTm = currentNode->burstTm;
-                    currentNode->burstTm = nextNode->burstTm;
-                    nextNode->burstTm = tempburstTm;
-                    //swap arrival time
-                    temparrivalTm = currentNode->arrivalTm;
-                    currentNode->arrivalTm = nextNode->arrivalTm;
-                    nextNode->arrivalTm = temparrivalTm;
-                    //swap priority
-                    temppriority = currentNode->priority;
-                    currentNode->priority = nextNode->priority;
-                    nextNode->priority = temppriority;
+                     //swap the processes
+                    tempProcess = currentNode;
+                    currentNode = nextNode;
+                    nextNode = tempProcess;
 
                 }
                 //Move to the next node in the list
