@@ -121,7 +121,9 @@ struct node *FCFS(struct node *currentNode)
         }
 
         //calculate the waiting time
-        double waitingTM = 0;
-        waitingTm += currentNode->burstTm;
+        double completionTm = 0;
+        completionTm += currentNode->burstTm;
 
+        double waitingTm = 0;
+        waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
 }
