@@ -22,7 +22,7 @@ void diplayOutput(string ,string);
 struct node *createNode(double, double double);
 void insertAfter(struct node *,double, double double);
 struct node *FCFS(struct node *);
-
+struct node *SJFNonPreemptive(struct node *);
 // this variable will be used to count the number of processes
 int countP = 0;
 //Menu 
@@ -126,4 +126,49 @@ struct node *FCFS(struct node *currentNode)
 
         double waitingTm = 0;
         waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
+}
+//shortest job non-preemptive
+struct node *SJFNonPreemptive(struct node *currentNode)
+{
+    struct node *nextNode = NULL; 
+    struct node *tempProcess=NULL;
+    
+    if (currentNode != NULL) 
+        {
+            nextNode = currentNode->next;
+            if (nextNode != NULL) 
+            {
+                //If the currentNode burst time is greater than nextNode burst time, we will swap the processes
+                if (currentNode->burstTm > nextNode->burstTm) 
+                {
+                    //swap the processes
+                    tempProcess = currentNode;
+                    currentNode = nextNode;
+                    nextNode = tempProcess;
+
+                }
+                // if both processes have the same burst time, we will perform FCFS
+                else if(currentNode->burstTm == nextNode->burstTm)
+                {
+                    FCFS(currentNode);
+                }
+                //Move to the next node in the list
+                nextNode = nextNode->next;
+            }
+            //Move to the next node in the list
+            currentNode = currentNode->next;
+        }
+
+       
+        else if(currentNode == NULL)
+        {
+            cout<<"The list is empty"<<endl;
+        }
+        //calculate the waiting time
+        double completionTm = 0;
+        completionTm += currentNode->burstTm;
+
+        double waitingTm = 0;
+        waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
+
 }
