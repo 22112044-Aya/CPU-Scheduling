@@ -23,6 +23,7 @@ struct node *createNode(double, double double);
 void insertAfter(struct node *,double, double double);
 struct node *FCFS(struct node *);
 struct node *SJFNonPreemptive(struct node *);
+
 // this variable will be used to count the number of processes
 int countP = 0;
 //Menu 
@@ -93,7 +94,9 @@ struct node *FCFS(struct node *currentNode)
 {
     //First we will sort the Arrival time, the process that has the least arrival time is executed first
     struct node *nextNode = NULL;
-    struct node *tempProcess= NULL;
+    double tempburstTm;
+    double temparrivalTm;
+    double temppriority;
         if (currentNode != NULL) 
         {
             nextNode = currentNode->next;
@@ -103,11 +106,18 @@ struct node *FCFS(struct node *currentNode)
                 //we will swap the processes, meaning we have to swap the burst time, arrival time and priority
                 if (currentNode->arrivalTm > nextNode->arrivalTm) 
                 {
-                     //swap the processes
-                    tempProcess = currentNode;
-                    currentNode = nextNode;
-                    nextNode = tempProcess;
-
+                    //swap burst time
+                    tempburstTm = currentNode->burstTm;
+                    currentNode->burstTm = nextNode->burstTm;
+                    nextNode->burstTm = tempburstTm;
+                    //swap arrival time
+                    temparrivalTm = currentNode->arrivalTm;
+                    currentNode->arrivalTm = nextNode->arrivalTm;
+                    nextNode->arrivalTm = temparrivalTm;
+                    //swap priority
+                    temppriority = currentNode->priority;
+                    currentNode->priority = nextNode->priority;
+                    nextNode->priority = temppriority;
                 }
                 //Move to the next node in the list
                 nextNode = nextNode->next;
@@ -131,7 +141,9 @@ struct node *FCFS(struct node *currentNode)
 struct node *SJFNonPreemptive(struct node *currentNode)
 {
     struct node *nextNode = NULL; 
-    struct node *tempProcess=NULL;
+    double tempburstTm;
+    double temparrivalTm;
+    double temppriority;
     
     if (currentNode != NULL) 
         {
@@ -141,11 +153,18 @@ struct node *SJFNonPreemptive(struct node *currentNode)
                 //If the currentNode burst time is greater than nextNode burst time, we will swap the processes
                 if (currentNode->burstTm > nextNode->burstTm) 
                 {
-                    //swap the processes
-                    tempProcess = currentNode;
-                    currentNode = nextNode;
-                    nextNode = tempProcess;
-
+                   //swap burst time
+                    tempburstTm = currentNode->burstTm;
+                    currentNode->burstTm = nextNode->burstTm;
+                    nextNode->burstTm = tempburstTm;
+                    //swap arrival time
+                    temparrivalTm = currentNode->arrivalTm;
+                    currentNode->arrivalTm = nextNode->arrivalTm;
+                    nextNode->arrivalTm = temparrivalTm;
+                    //swap priority
+                    temppriority = currentNode->priority;
+                    currentNode->priority = nextNode->priority;
+                    nextNode->priority = temppriority;
                 }
                 // if both processes have the same burst time, we will perform FCFS
                 else if(currentNode->burstTm == nextNode->burstTm)
