@@ -24,7 +24,6 @@ void insertAfter(struct node *,double, double double);
 struct node *FCFS(struct node *);
 struct node *SJFNonPreemptive(struct node *);
 void swap(struct node *,struct node *);
-struct node *SJFPreemptive(struct node *);
 
 // this variable will be used to count the number of processes
 int countP = 0;
@@ -92,6 +91,7 @@ void swap(struct node *currentNode,struct node *nextNode)
     currentNode->priority = nextNode->priority;
     nextNode->priority = temppriority;
 }
+
 //create a new node that will represent the creation of a new process in the linked list
 struct node *createNode(double burstTm, double arrivalTm, double priority) {
     struct node *temp = (struct node *) malloc(sizeof(node));
@@ -129,8 +129,27 @@ struct node *FCFS(struct node *currentNode)
                 //we will swap the processes, meaning we have to swap the burst time, arrival time and priority
                 if (currentNode->arrivalTm > nextNode->arrivalTm) 
                 {
-                    //swap processes
-			swap(currentNode,nextNode);
+                    //swap processes 
+void swap(struct node *currentNode,struct node *nextNode) 
+{
+   
+    double tempburstTm;
+    double temparrivalTm;
+    double temppriority;
+
+    //swap burst time
+    tempburstTm = currentNode->burstTm;
+    currentNode->burstTm = nextNode->burstTm;
+    nextNode->burstTm = tempburstTm;
+    //swap arrival time
+    temparrivalTm = currentNode->arrivalTm;
+    currentNode->arrivalTm = nextNode->arrivalTm;
+    nextNode->arrivalTm = temparrivalTm;
+    //swap priority
+    temppriority = currentNode->priority;
+    currentNode->priority = nextNode->priority;
+    nextNode->priority = temppriority;
+}
                 }
                 //Move to the next node in the list
                 nextNode = nextNode->next;
@@ -166,8 +185,18 @@ struct node *SJFNonPreemptive(struct node *currentNode)
                 //If the currentNode burst time is greater than nextNode burst time, we will swap the processes
                 if (currentNode->burstTm > nextNode->burstTm) 
                 {
-                    //swap processes
-                        swap(currentNode,nextNode);
+                   //swap burst time
+                    tempburstTm = currentNode->burstTm;
+                    currentNode->burstTm = nextNode->burstTm;
+                    nextNode->burstTm = tempburstTm;
+                    //swap arrival time
+                    temparrivalTm = currentNode->arrivalTm;
+                    currentNode->arrivalTm = nextNode->arrivalTm;
+                    nextNode->arrivalTm = temparrivalTm;
+                    //swap priority
+                    temppriority = currentNode->priority;
+                    currentNode->priority = nextNode->priority;
+                    nextNode->priority = temppriority;
                 }
                 // if both processes have the same burst time, we will perform FCFS
                 else if(currentNode->burstTm == nextNode->burstTm)
@@ -193,40 +222,4 @@ struct node *SJFNonPreemptive(struct node *currentNode)
         double waitingTm = 0;
         waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
 
-}
-
-struct node *SJFPreemptive(struct node *currentNode) 
-{
-   
-    struct node *nextNode = NULL;
-    struct node *processWaitingList = NULL;  
-    struct node *processWaitingListCurrentNode=NULL;
-
-    if (currentNode != NULL) 
-        {
-            nextNode = currentNode->next;
-
-            if (nextNode != NULL) 
-            {
-                // if the process that arrived recently has a shorter burst time than the currently running process,
-                // allocate the cpu to the newly arrived process and the currently running process will wait in the process waiting list 
-                if (nexttNode->burstTm < currentNode->burstTm) 
-                {
-                        if (processWaitingList == NULL) 
-                        {
-                            processWaitingList = currentNode;
-                        }
-                        else
-                        {
-                            processWaitingListCurrentNode = processWaitingList;
-                   
-                            if (processWaitingListCurrentNode->next != NULL)
-                            {
-                            processWaitingListCurrentNode = processWaitingListCurrentNode->next;
-                            }
-                            processWaitingListCurrentNode->next = currentNode;
-                        }
-                }
-            }
-        }
 }
