@@ -20,11 +20,11 @@ int simulatorMainMenu(string ,string);
 int schedulingMethods();
 void diplayOutput(string ,string);
 struct node *createNode(double, double double);
-void insertAfter(struct node *,double, double double);
+void insertAfter(struct node *,double, double, double);
 struct node *FCFS(struct node *);
 struct node *SJFNonPreemptive(struct node *);
 void swap(struct node *,struct node *);
-struct node *SJFPreemptive(struct node *);
+struct node *SJFPreemptive(struct node *, struct node *);
 
 // this variable will be used to count the number of processes
 int countP = 0;
@@ -130,7 +130,7 @@ struct node *FCFS(struct node *currentNode)
                 if (currentNode->arrivalTm > nextNode->arrivalTm) 
                 {
                     //swap processes
-			swap(currentNode,nextNode);
+			        swap(currentNode,nextNode);
                 }
                 //Move to the next node in the list
                 nextNode = nextNode->next;
@@ -195,38 +195,64 @@ struct node *SJFNonPreemptive(struct node *currentNode)
 
 }
 
-struct node *SJFPreemptive(struct node *currentNode) 
-{
-   
+struct node *SJFPreemptive(struct node *currentNode, struct node *header)
+ {
     struct node *nextNode = NULL;
-    struct node *processWaitingList = NULL;  
-    struct node *processWaitingListCurrentNode=NULL;
+    struct node *processWaitingList = NULL;
+    struct node *processWaitingListCurrentNode = NULL;
+    struct node *previousNode = NULL;
 
-    if (currentNode != NULL) 
+    while (currentNode != NULL) 
+    {
+        nextNode = currentNode->next;
+
+        if (nextNode != NULL) 
         {
-            nextNode = currentNode->next;
-
-            if (nextNode != NULL) 
+            // If the process that arrived recently has a shorter burst time than the currently running process,
+            // allocate the CPU to the newly arrived process, and the currently running process will wait in the process waiting list
+            if (nextNode->burstTm < currentNode->burstTm) 
             {
-                // if the process that arrived recently has a shorter burst time than the currently running process,
-                // allocate the cpu to the newly arrived process and the currently running process will wait in the process waiting list 
-                if (nexttNode->burstTm < currentNode->burstTm) 
+                if (processWaitingList == NULL) 
                 {
-                        if (processWaitingList == NULL) 
-                        {
-                            processWaitingList = currentNode;
-                        }
-                        else
-                        {
-                            processWaitingListCurrentNode = processWaitingList;
-                   
-                            if (processWaitingListCurrentNode->next != NULL)
-                            {
-                            processWaitingListCurrentNode = processWaitingListCurrentNode->next;
-                            }
-                            processWaitingListCurrentNode->next = currentNode;
-                        }
+                    processWaitingList = currentNode;
+                    processWaitingList->next = NULL;
+                } 
+                else 
+                {
+                    processWaitingListCurrentNode = processWaitingList;
+                    while(processWaitingListCurrentNode->next != NULL) 
+                    {
+                        processWaitingListCurrentNode = processWaitingListCurrentNode->next;
+                    }
+                    processWaitingListCurrentNode->next = currentNode;
+                    currentNode->next = NULL;
                 }
+                
+                // update the process waiting list
+                if (previousNode == NULL) 
+                {
+                    header = nextNode;
+                } 
+                else 
+                {
+                    previousNode->next = nextNode;
+                }
+                nextNode->next = NULL;
             }
+        } 
+        else 
+        {
+            // update the remaining burst time of the process
+            currentNode->burstTm -= nextNode->burstTm;
         }
+        previousNode = currentNode;
+        currentNode = nextNode;
+    }
+
+    if(currentNode == NULL)
+    {
+        cout<<"The list is empty"<<endl;
+    }
+
 }
+
