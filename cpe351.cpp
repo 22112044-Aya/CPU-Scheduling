@@ -25,6 +25,7 @@ struct node *FCFS(struct node *);
 struct node *SJFNonPreemptive(struct node *);
 void swap(struct node *,struct node *);
 struct node *SJFPreemptive(struct node *, struct node *);
+struct node *priorityNonPreemptive(struct node *);
 
 // this variable will be used to count the number of processes
 int countP = 0;
@@ -125,8 +126,7 @@ struct node *FCFS(struct node *currentNode)
             nextNode = currentNode->next;
             if (nextNode != NULL) 
             {
-                //If the currentNode arrival time is greater than nextNode arrival time, 
-                //we will swap the processes, meaning we have to swap the burst time, arrival time and priority
+                //If the currentNode arrival time is greater than nextNode arrival time, we will swap the processes
                 if (currentNode->arrivalTm > nextNode->arrivalTm) 
                 {
                     //swap processes
@@ -150,7 +150,7 @@ struct node *FCFS(struct node *currentNode)
         double waitingTm = 0;
         waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
 }
-//shortest job non-preemptive
+
 struct node *SJFNonPreemptive(struct node *currentNode)
 {
     struct node *nextNode = NULL; 
@@ -256,3 +256,44 @@ struct node *SJFPreemptive(struct node *currentNode, struct node *header)
 
 }
 
+struct node *priorityNonPreemptive(struct node *currentNode)
+ {
+    struct node *nextNode = NULL;
+
+    if (currentNode != NULL) 
+    {
+        while (currentNode != NULL) 
+        {
+            nextNode = currentNode->next;
+            if (nextNode != NULL) 
+            {
+                // If the currentNode priority is greater than nextNode priority, we will swap the processes
+                if (currentNode->priority > nextNode->priority) 
+                {
+                    swap(currentNode, nextNode);
+                } 
+                else if (currentNode->priority == nextNode->priority) 
+                {
+                    // If both processes have the same priority,we will perform FCFS
+                    FCFS(currentNode);
+                }    
+                // Move to the next node in the list
+                nextNode=nextNode->next;
+            }
+            // Move to the next node in the list
+            currentNode = currentNode->next;     
+        }
+    } 
+    else if(currentNode == NULL)
+        {
+            cout<<"The list is empty"<<endl;
+        }
+
+         //calculate the waiting time
+        double completionTm = 0;
+        completionTm += currentNode->burstTm;
+
+        double waitingTm = 0;
+        waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
+
+}
