@@ -118,13 +118,12 @@ struct node *FCFS(struct node *currentNode)
 {
     //First we will sort the Arrival time, the process that has the least arrival time is executed first
     struct node *nextNode = NULL;
-    double tempburstTm;
-    double temparrivalTm;
-    double temppriority;
-        if (currentNode != NULL) 
+    double completionTm = 0;
+    double waitingTm = 0;
+        while (currentNode != NULL) 
         {
             nextNode = currentNode->next;
-            if (nextNode != NULL) 
+            while (nextNode != NULL) 
             {
                 //If the currentNode arrival time is greater than nextNode arrival time, we will swap the processes
                 if (currentNode->arrivalTm > nextNode->arrivalTm) 
@@ -135,6 +134,11 @@ struct node *FCFS(struct node *currentNode)
                 //Move to the next node in the list
                 nextNode = nextNode->next;
             }
+
+            //calculate the waiting time
+            completionTm += currentNode->burstTm;
+            waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
+            
             //Move to the next node in the list
             currentNode = currentNode->next;
         }
@@ -142,15 +146,7 @@ struct node *FCFS(struct node *currentNode)
         {
             cout<<"The list is empty"<<endl;
         }
-
-        //calculate the waiting time
-        double completionTm = 0;
-        completionTm += currentNode->burstTm;
-
-        double waitingTm = 0;
-        waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
 }
-
 struct node *SJFNonPreemptive(struct node *currentNode)
 {
     struct node *nextNode = NULL; 
