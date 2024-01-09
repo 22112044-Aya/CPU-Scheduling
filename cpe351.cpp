@@ -155,12 +155,11 @@ struct node *FCFS(struct node *currentNode)
 
     
 }
-//shortest job non-preemptive
 struct node *SJFNonPreemptive(struct node *currentNode)
 {
-    struct node *nextNode = NULL; 
-   
-    
+    struct node *nextNode = NULL;
+    double completionTm = 0;
+    double waitingTm = 0;  
     if (currentNode != NULL) 
         {
             nextNode = currentNode->next;
@@ -180,24 +179,19 @@ struct node *SJFNonPreemptive(struct node *currentNode)
                 //Move to the next node in the list
                 nextNode = nextNode->next;
             }
+            //calculate the waiting time
+            completionTm += currentNode->burstTm;
+            waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
+
             //Move to the next node in the list
             currentNode = currentNode->next;
         }
-
-       
         else if(currentNode == NULL)
         {
             cout<<"The list is empty"<<endl;
         }
-        //calculate the waiting time
-        double completionTm = 0;
-        completionTm += currentNode->burstTm;
-
-        double waitingTm = 0;
-        waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
 
 }
-
 struct node *SJFPreemptive(struct node *currentNode, struct node *header)
  {
     struct node *nextNode = NULL;
