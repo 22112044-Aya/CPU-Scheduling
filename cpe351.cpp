@@ -16,9 +16,9 @@ struct node {
 };
 
 
-int simulatorMainMenu(string ,string);
+int simulatorMainMenu();
 int schedulingMethods();
-void diplayOutput(string ,string);
+void diplayOutput();
 struct node *createNode(double, double double);
 void insertAfter(struct node *,double, double, double);
 struct node *FCFS(struct node *);
@@ -29,8 +29,13 @@ struct node *priorityNonPreemptive(struct node *);
 
 // this variable will be used to count the number of processes
 int countP = 0;
+char method;
+char mode;
+int quantum;
+int methodChoosen;
+
 //Menu 
- int simulatorMainMenu(string method, string mode) {
+ int simulatorMainMenu() {
     int choice1;
     cout <<"           "<< "CPU Scheduler Simulator"<<"             "<<endl;
     cout << "1) Scheduling Method (" <<method<< ")" <<endl;
@@ -55,7 +60,7 @@ int schedulingMethods() {
     return choice2;
 }
 void diplayOutput(method, mode) {
-    cout << "Scheduling Method: " << method << " - " << mode <<endl;
+    cout << "Scheduling Method: " << method << " - " << "Preemptive "<< mode <<endl;
     cout << "Process Waiting Times:" <<endl;
 
     // the following loop will display the waiting time for each process
@@ -139,6 +144,7 @@ struct node *FCFS(struct node *currentNode)
             completionTm += currentNode->burstTm;
             waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
             
+
             //Move to the next node in the list
             currentNode = currentNode->next;
         }
@@ -146,13 +152,14 @@ struct node *FCFS(struct node *currentNode)
         {
             cout<<"The list is empty"<<endl;
         }
+
+    
 }
+//shortest job non-preemptive
 struct node *SJFNonPreemptive(struct node *currentNode)
 {
     struct node *nextNode = NULL; 
-    double tempburstTm;
-    double temparrivalTm;
-    double temppriority;
+   
     
     if (currentNode != NULL) 
         {
@@ -292,4 +299,168 @@ struct node *priorityNonPreemptive(struct node *currentNode)
         double waitingTm = 0;
         waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
 
+}
+int main
+{ 
+    int choice1;
+    int choice2;
+    int a=0;
+    int x;
+    int y;
+
+    while (a==0)
+    {    
+        cout <<"           "<< "CPU Scheduler Simulator"<<"             "<<endl;
+        cout << "1) Scheduling Method (" <<method<< ")" <<endl;
+        cout << "2) Preemptive Mode (" <<mode<< ")" << endl;
+        cout << "3) Show result" <<endl;
+        cout << "4) End program" <<endl;
+        cout << "Option > ";
+        cin >> choice1;
+        
+        switch(choice1)
+        {
+            case 1:
+            {
+                    cout <<"           "<< "CPU Scheduling Methods"<<"             "<<endl;
+                    cout << "1) None: None of scheduling method chosen " <<endl;
+                    cout << "2) First Come, First Serve Scheduling " <<endl;
+                    cout << "3) Shortest-Job-First Scheduling" <<endl;
+                    cout << "4) Priority Scheduling" <<endl;
+                    cout << "5) Round-Robin Scheduling" <<endl;
+                    cout << "Choose One Of The Following Scheduling Methods: "<<endl;
+                    cin >> choice2;
+                    switch(choice2)
+                    {
+                        case 1:
+                        {
+                            method = "NONE";         
+                        }
+                        break;
+                        
+                        case 2:
+                        {
+                            FCFS(currentNode);
+                            methodChoosen = FCFS(currentNode);
+                            method = "FCFS";
+                        }
+                        break; 
+                        case 3:
+                        {
+                            cout<<"1-> Non Preemtive" << endl;
+							cout<<"2-> Preemtive"<< endl;
+							cout<<"Choose the method you would like yo use for SJF : ";
+							cin>>x;	
+							switch(x)
+							{
+							case 1:
+							{
+							    SJFNonPreemptive(currentNode);
+                                methodChoosen = SJFNonPreemptive(currentNode);
+                                method = "SJF";                    
+							}
+							break;
+							case 2:
+							{
+					            SJFPreemptive(currentNode);	
+                                methodChoosen = SJFPreemptive(currentNode);		
+                                method = "SJF";          				
+							}
+							break;
+                            default:
+                            cout<<"choose one of the above methods"<<endl;
+                            break;
+                            }
+                        }
+                        break;  
+                        case 4:
+                        {
+                            cout<<"1-> Non Preemtive" << endl;
+							cout<<"2-> Preemtive"<< endl;
+							cout<<"Choose the method you would like yo use for Priority : ";
+							cin>>y;	
+							switch(y)
+							{
+							    case 1:
+								{
+								    priorityNonPreemptive(currentNode);
+                                    methodChoosen = priorityNonPreemptive(currentNode);
+                                    method = "Priority";
+                                                
+								}
+								break;
+								case 2:
+								{
+									SJFPreemptive(currentNode);	
+                                    methodChoosen = priorityPreemptive(currentNode);		
+                                    method = "Priority";                 				
+								}
+								break;
+                                default:
+                                cout<<"choose one of the above methods"<<endl;
+                                break;
+                            }
+                        }
+                        break;
+                        case 5:
+                        {
+                            cout<<"Enter the value of the quantum: ":
+                            cin>>quantum;
+                            roundRobin(currentNode);
+                            method = roundRobin(currentNode);
+                            method = "Round Robin";
+                           
+                        }
+                        break;
+                        default:
+                        cout<<"choose a number between 1 and 5";
+                        break;
+                    }
+            }
+            break;
+            case 2:
+            {
+                if(methodChoosen=FCFS(currentNode))
+                {
+                    mode = "OFF";
+                }
+                if(methodChoosen=SJFNonPreemptive(currentNode))
+                {
+                    mode = "OFF";
+                }
+                if(methodChoosen=SJFPreemptive(currentNode))
+                {
+                    mode = "ON";
+                }
+                if(methodChoosen=priority(currentNode))
+                {
+                    mode = "OFF";
+                }
+                if(methodChoosen=priorityPreemptive(currentNode))
+                {
+                    mode = "ON";
+                }
+                cout<<"The mode is "<<mode<<endl;
+               
+            }
+            break;
+
+            case 3:
+            {
+                //show result
+            }
+            break;
+
+            case 4:
+            {
+                exit(0);
+            }
+            break;
+            
+            default:
+            cout<<"choose a valid number between 1 and 4";
+            break;
+
+        }
+    }
 }
