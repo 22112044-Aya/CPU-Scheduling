@@ -322,100 +322,98 @@ int main
         {
             case 1:
             {
-                    cout <<"           "<< "CPU Scheduling Methods"<<"             "<<endl;
-                    cout << "1) None: None of scheduling method chosen " <<endl;
-                    cout << "2) First Come, First Serve Scheduling " <<endl;
-                    cout << "3) Shortest-Job-First Scheduling" <<endl;
-                    cout << "4) Priority Scheduling" <<endl;
-                    cout << "5) Round-Robin Scheduling" <<endl;
-                    cout << "Choose One Of The Following Scheduling Methods: "<<endl;
-                    cin >> choice2;
-                    switch(choice2)
-                    {
-                        case 1:
-                        {
-                            method = "NONE";         
-                        }
-                        break;
+               cout <<"           "<< "CPU Scheduling Methods"<<"             "<<endl;
+               cout << "1) None: None of scheduling method chosen " <<endl;
+               cout << "2) First Come, First Serve Scheduling " <<endl;
+               cout << "3) Shortest-Job-First Scheduling" <<endl;
+               cout << "4) Priority Scheduling" <<endl;
+               cout << "5) Round-Robin Scheduling" <<endl;
+               cout << "Choose One Of The Following Scheduling Methods: "<<endl;
+               cin >> choice2;
+               switch(choice2)
+               {
+                  case 1:
+                  {
+                    method = "NONE";         
+                  }
+                  break;
                         
-                        case 2:
-                        {
-                            FCFS(currentNode);
-                            methodChoosen = FCFS(currentNode);
-                            method = "FCFS";
-                        }
-                        break; 
-                        case 3:
-                        {
-                            cout<<"1-> Non Preemtive" << endl;
-							cout<<"2-> Preemtive"<< endl;
-							cout<<"Choose the method you would like yo use for SJF : ";
-							cin>>x;	
-							switch(x)
-							{
-							case 1:
-							{
-							    SJFNonPreemptive(currentNode);
-                                methodChoosen = SJFNonPreemptive(currentNode);
-                                method = "SJF";                    
-							}
-							break;
-							case 2:
-							{
-					            SJFPreemptive(currentNode);	
-                                methodChoosen = SJFPreemptive(currentNode);		
-                                method = "SJF";          				
-							}
-							break;
-                            default:
-                            cout<<"choose one of the above methods"<<endl;
-                            break;
-                            }
-                        }
-                        break;  
-                        case 4:
-                        {
-                            cout<<"1-> Non Preemtive" << endl;
-							cout<<"2-> Preemtive"<< endl;
-							cout<<"Choose the method you would like yo use for Priority : ";
-							cin>>y;	
-							switch(y)
-							{
-							    case 1:
-								{
-								    priorityNonPreemptive(currentNode);
+                  case 2:
+                  {
+                    FCFS(currentNode);
+                    methodChoosen = FCFS(currentNode);
+                    method = "FCFS";
+                  }
+                  break; 
+                  case 3:
+                  {
+                     cout<<"1-> Non Preemtive" << endl;
+		     cout<<"2-> Preemtive"<< endl;
+	             cout<<"Choose the method you would like yo use for SJF : ";
+		     cin>>x;	
+		     switch(x)
+		     {
+		  	case 1:
+		  	{
+		     	    SJFNonPreemptive(currentNode);
+                     	    methodChoosen = SJFNonPreemptive(currentNode);
+                     	    method = "SJF";                    
+		  	}
+		  	break;
+		  	case 2:
+		  	{
+		     	    SJFPreemptive(currentNode);	
+                     	    methodChoosen = SJFPreemptive(currentNode);		
+                     	    method = "SJF";          				
+		  	}
+		  	break;
+                  	default:
+                  	cout<<"choose one of the above methods"<<endl;
+                  	break;
+                     }
+         	 }
+                 break;  
+                 case 4:
+                 {
+                 	cout<<"1-> Non Preemtive" << endl;
+			cout<<"2-> Preemtive"<< endl;
+			cout<<"Choose the method you would like yo use for Priority : ";
+			cin>>y;	
+			switch(y)
+			{
+				case 1:
+				{
+				    priorityNonPreemptive(currentNode);
                                     methodChoosen = priorityNonPreemptive(currentNode);
-                                    method = "Priority";
-                                                
-								}
-								break;
-								case 2:
-								{
-									SJFPreemptive(currentNode);	
+                                    metod = "Priority";
+                                }
+				break;
+				case 2:
+				{
+				    SJFPreemptive(currentNode);	
                                     methodChoosen = priorityPreemptive(currentNode);		
                                     method = "Priority";                 				
-								}
-								break;
+				}
+				break;
                                 default:
                                 cout<<"choose one of the above methods"<<endl;
                                 break;
-                            }
                         }
-                        break;
-                        case 5:
-                        {
-                            cout<<"Enter the value of the quantum: ":
-                            cin>>quantum;
-                            roundRobin(currentNode);
-                            method = roundRobin(currentNode);
-                            method = "Round Robin";
-                           
-                        }
-                        break;
-                        default:
-                        cout<<"choose a number between 1 and 5";
-                        break;
-                    }
+                  }
+                  break;
+                  case 5:
+                  {
+                     cout<<"Enter the value of the quantum: ":
+                     cin>>quantum;
+                     roundRobin(currentNode);
+                     method = roundRobin(currentNode);
+                     method = "Round Robin";   
+                  }
+                  break;
+                  default:
+                  cout<<"choose a number between 1 and 5";
+                  break;
+                  }
             }
             break;
             case 2:
