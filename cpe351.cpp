@@ -143,8 +143,6 @@ struct node *FCFS(struct node *currentNode)
             //calculate the waiting time
             completionTm += currentNode->burstTm;
             waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
-            
-
             //Move to the next node in the list
             currentNode = currentNode->next;
         }
@@ -256,6 +254,8 @@ struct node *SJFPreemptive(struct node *currentNode, struct node *header)
 struct node *priorityNonPreemptive(struct node *currentNode)
  {
     struct node *nextNode = NULL;
+    double completionTm = 0;
+    double waitingTm = 0;
 
     if (currentNode != NULL) 
     {
@@ -277,22 +277,18 @@ struct node *priorityNonPreemptive(struct node *currentNode)
                 // Move to the next node in the list
                 nextNode=nextNode->next;
             }
-            // Move to the next node in the list
-            currentNode = currentNode->next;     
+            //calculate the waiting time
+            completionTm += currentNode->burstTm;
+            waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
+            
+            //Move to the next node in the list
+            currentNode = currentNode->next;
         }
     } 
     else if(currentNode == NULL)
         {
             cout<<"The list is empty"<<endl;
         }
-
-         //calculate the waiting time
-        double completionTm = 0;
-        completionTm += currentNode->burstTm;
-
-        double waitingTm = 0;
-        waitingTm = completionTm - currentNode->arrivalTm - currentNode->burstTm;
-
 }
 int main
 { 
