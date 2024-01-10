@@ -26,6 +26,7 @@ struct node *SJFNonPreemptive(struct node *);
 void swap(struct node *,struct node *);
 struct node *SJFPreemptive(struct node *, struct node *);
 struct node *priorityNonPreemptive(struct node *);
+struct process * readFromFile(struct process *);
 
 // this variable will be used to count the number of processes
 int countP = 0;
@@ -119,6 +120,31 @@ void insertAfter(struct node *afterNode,double burstTm, double arrivalTm, double
      afterNode->next = temp;
      countP++;
 }
+struct process * readFromFile(struct process *header)
+{
+    ifstream inputFile(argv[2]);
+    if (!inputFile.is_open())
+    {
+        cout<< "The input file cannot open "<< endl;
+        return 1;
+    }
+    
+    struct process* process=NULL;
+    char line[2000];
+    int x= count(process);
+    while (getline(inputFile, line) != NULL)
+    {
+        int y[5];
+        istringstream iss(line);
+        iss >> y[0] >> y[2] >> y[4];
+
+        process = insertAfter(process,x,, y[0], y[2] ,y[4]);
+        x++;
+    } 
+    inputFile.close();
+	return header;  
+}
+
 struct node *FCFS(struct node *currentNode) 
 {
     //First we will sort the Arrival time, the process that has the least arrival time is executed first
