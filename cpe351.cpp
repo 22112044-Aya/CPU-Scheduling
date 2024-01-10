@@ -191,13 +191,34 @@ struct process *FCFS(struct process *currentprocess)
 
     
 }
-//shortest job non-preemptive
 struct process *SJFNonPreemptive(struct process *currentprocess)
 {
     struct process *nextprocess = NULL;
     double completionTm = 0;
-    double waitingTm = 0;  
-    if (currentprocess != NULL) 
+ 
+    while (currentprocess != NULL) 
+        {
+            nextprocess = currentprocess->next;
+            while (nextprocess != NULL) 
+            {
+                //If the currentprocess arrival time is greater than nextprocess arrival time, we will swap the processes
+                if (currentprocess->arrivalTm > nextprocess->arrivalTm) 
+                {
+                    //swap processes
+			        swap(currentprocess,nextprocess);
+                }
+                //Move to the next process in the list
+                nextprocess = nextprocess->next;
+            }
+
+            //calculate the waiting time
+            completionTm += currentprocess->burstTm;
+            waitingTm = completionTm - currentprocess->arrivalTm - currentprocess->burstTm;
+            sum += waitingTM;
+            //Move to the next process in the list
+            currentprocess = currentprocess->next;
+        }
+    while (currentprocess != NULL) 
         {
             nextprocess = currentprocess->next;
             if (nextprocess != NULL) 
@@ -208,28 +229,30 @@ struct process *SJFNonPreemptive(struct process *currentprocess)
                     //swap processes
                         swap(currentprocess,nextprocess);
                 }
-                // if both processes have the same burst time, we will perform FCFS
-                else if(currentprocess->burstTm == nextprocess->burstTm)
-                {
-                    FCFS(currentprocess);
-                }
                 //Move to the next process in the list
                 nextprocess = nextprocess->next;
             }
-            //calculate the waiting time
+             //calculate the waiting time
             completionTm += currentprocess->burstTm;
             waitingTm = completionTm - currentprocess->arrivalTm - currentprocess->burstTm;
-
+            sum += waitingTM;
             //Move to the next process in the list
             currentprocess = currentprocess->next;
         }
-        else if(currentprocess == NULL)
+        if (count(currentprocess) != 0)
+        {
+            avgTm= sum/count(currentprocess);
+        }
+        else 
+        {
+            avgTm = 0;
+        }
+        if(currentprocess == NULL)
         {
             cout<<"The list is empty"<<endl;
         }
 
 }
-
 struct process *SJFPreemptive(struct process *currentprocess, struct process *header)
  {
     struct process *nextprocess = NULL;
