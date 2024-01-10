@@ -154,7 +154,6 @@ struct process *FCFS(struct process *currentprocess)
     //First we will sort the Arrival time, the process that has the least arrival time is executed first
     struct process *nextprocess = NULL;
     double completionTm = 0;
-    double waitingTm = 0;
         while (currentprocess != NULL) 
         {
             nextprocess = currentprocess->next;
@@ -173,11 +172,19 @@ struct process *FCFS(struct process *currentprocess)
             //calculate the waiting time
             completionTm += currentprocess->burstTm;
             waitingTm = completionTm - currentprocess->arrivalTm - currentprocess->burstTm;
-
+            sum += waitingTM;
             //Move to the next process in the list
             currentprocess = currentprocess->next;
         }
-        else if(currentprocess == NULL)
+        if (count(currentprocess) != 0)
+        {
+            avgTm= sum/count(currentprocess);
+        }
+        else 
+        {
+            avgTm = 0;
+        }
+        if(currentprocess == NULL)
         {
             cout<<"The list is empty"<<endl;
         }
