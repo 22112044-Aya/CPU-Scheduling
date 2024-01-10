@@ -27,6 +27,7 @@ void swap(struct node *,struct node *);
 struct node *SJFPreemptive(struct node *, struct node *);
 struct node *priorityNonPreemptive(struct node *);
 struct process * readFromFile(struct process *);
+void writeToFile();
 
 // this variable will be used to count the number of processes
 int countP = 0;
@@ -316,6 +317,25 @@ struct node *priorityNonPreemptive(struct node *currentNode)
             cout<<"The list is empty"<<endl;
         }
 }
+
+void writeToFile()
+{
+	ofstream writeFile("output.txt");
+
+	if (!writeFile) 
+    {
+		writeFile.open("output.txt");
+		writeFile <<displayOutput()<<endl;
+		
+		writeFile.close(); 
+	}
+	else 
+    {
+		writeFile <<diplayOutput()<<endl;
+		writeFile.close(); 
+	}
+}
+
 int main
 { 
     int choice1;
