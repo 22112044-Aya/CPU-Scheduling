@@ -315,45 +315,67 @@ struct process *SJFPreemptive(struct process *currentprocess, struct process *he
 }
 
 struct process *priorityNonPreemptive(struct process *currentprocess)
- {
+{
     struct process *nextprocess = NULL;
     double completionTm = 0;
-    double waitingTm = 0;
+ 
+    while (currentprocess != NULL) 
+        {
+            nextprocess = currentprocess->next;
+            while (nextprocess != NULL) 
+            {
+                //If the currentprocess arrival time is greater than nextprocess arrival time, we will swap the processes
+                if (currentprocess->arrivalTm > nextprocess->arrivalTm) 
+                {
+                    //swap processes
+			        swap(currentprocess,nextprocess);
+                }
+                //Move to the next process in the list
+                nextprocess = nextprocess->next;
+            }
 
-    if (currentprocess != NULL) 
-    {
-        while (currentprocess != NULL) 
+            //calculate the waiting time
+            completionTm += currentprocess->burstTm;
+            waitingTm = completionTm - currentprocess->arrivalTm - currentprocess->burstTm;
+            sum += waitingTM;
+            //Move to the next process in the list
+            currentprocess = currentprocess->next;
+        }
+    while (currentprocess != NULL) 
         {
             nextprocess = currentprocess->next;
             if (nextprocess != NULL) 
             {
-                // If the currentprocess priority is greater than nextprocess priority, we will swap the processes
+                //If the currentprocess burst time is greater than nextprocess burst time, we will swap the processes
                 if (currentprocess->priority > nextprocess->priority) 
                 {
-                    swap(currentprocess, nextprocess);
-                } 
-                else if (currentprocess->priority == nextprocess->priority) 
-                {
-                    // If both processes have the same priority,we will perform FCFS
-                    FCFS(currentprocess);
-                }    
-                // Move to the next process in the list
-                nextprocess=nextprocess->next;
+                    //swap processes
+                        swap(currentprocess,nextprocess);
+                }
+                //Move to the next process in the list
+                nextprocess = nextprocess->next;
             }
-            //calculate the waiting time
+             //calculate the waiting time
             completionTm += currentprocess->burstTm;
             waitingTm = completionTm - currentprocess->arrivalTm - currentprocess->burstTm;
-            
+            sum += waitingTM;
             //Move to the next process in the list
             currentprocess = currentprocess->next;
         }
-    } 
-    else if(currentprocess == NULL)
+        if (count(currentprocess) != 0)
+        {
+            avgTm= sum/count(currentprocess);
+        }
+        else 
+        {
+            avgTm = 0;
+        }
+        if(currentprocess == NULL)
         {
             cout<<"The list is empty"<<endl;
         }
-}
 
+}
 struct process * readFromFile(struct process *header,char *argv[])
 {
     ifstream inputFile(argv[2]);
