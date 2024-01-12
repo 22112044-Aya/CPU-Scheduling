@@ -109,23 +109,23 @@ int main(int argc, char *argv[])
                     break; 
                     case 3:
                     {
-						cout<<"1-> Non Preemtive" << endl;
+                        cout<<"1-> Non Preemtive" << endl;
 						cout<<"2-> Preemtive"<< endl;
 						cout<<"Choose the method you would like yo use for SJF : ";
-						cin>>x;
+						cin>>x;	
 						switch(x)
 						{
 							case 1:
 							{
-								method = "SJF Non-Preemptive";
+                                method = "SJF Non-Preemptive";                    
 							}
 							break;
 							case 2:
-							{
-								method = "SJF Preemptive";
+							{			
+                                method = "SJF Preemptive";      				
 							}
 							break;
-							default:
+                            default:
                             cout<<"choose one of the above methods"<<endl;
                             break;
                         }
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
                     break;  
                     case 4:
                     {
-						cout<<"1-> Non Preemtive" << endl;
+                        cout<<"1-> Non Preemtive" << endl;
 						cout<<"2-> Preemtive"<< endl;
 						cout<<"Choose the method you would like yo use for Priority : ";
 						cin>>y;	
@@ -141,12 +141,12 @@ int main(int argc, char *argv[])
 						{
 							case 1:
 							{
-								method = "Priority Non-Preemptive";                 
+                                method = "Priority Non-Preemptive";                 
 							}
 							break;
 							case 2:
-							{
-								method = "Priority Preemptive";              				
+							{	
+                                method = "Priority Preemptive";              				
 							}
 							break;
                             default:
@@ -549,7 +549,7 @@ struct process* sortPriority(struct process* currentprocess)
         while (header->next != NULL) {
             if (header->priority > header->next->priority) 
             {
-				double tempburstTm;
+                double tempburstTm;
                 double temparrivalTm;
                 double temppriority;
                 int tempindex;
